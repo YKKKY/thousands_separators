@@ -4,9 +4,8 @@ function thousands_separators(num) {
     var newNum=[];
     var numberString="";
 
-    num=num+"";
+    num=num.toString();
     newNum=num.split(".");
-
     numberString=buildFirstNum(newNum);
     return (numberString);
 }
@@ -20,40 +19,46 @@ function  splitNumber(newNum){
 
             numberString = newNum[0].charAt(i) + "," + numberString;
         } else {
-            numberString = newNum[0].charAt(i) + numberString;
 
+            numberString = newNum[0].charAt(i) + numberString;
         }
         count++;
     }
+
     return numberString;
 }
 
 function buildDecimalPart(newNum){
-
     var decimalPart = "";
+    var count=0;
 
-    if (newNum[1] != "0") {
+    for (var i = 0; i < newNum[1].length; i++) {
+        if (newNum[1].charAt(i) === "0") {
 
-        for (var i = newNum[1].length-1; i >= 0; i--) {
+            count++;
+        }
+    }
+    if (count === newNum[1].length) {
+            return decimalPart;
+    }else {
+        for (var i = newNum[1].length - 1; i >= 0; i--) {
 
             decimalPart = newNum[1].charAt(i) + decimalPart;
         }
     }
 
-    return decimalPart;
+    return ("."+decimalPart);
 }
 
 function  buildFirstNum(newNum){
-
     var numberString="";
 
     if(newNum.length===1){
 
         numberString=splitNumber(newNum);
-    }
-    else {
+    } else {
 
-        numberString=splitNumber(newNum)+"."+buildDecimalPart(newNum);
+        numberString=splitNumber(newNum)+buildDecimalPart(newNum);
     }
 
     return numberString;
